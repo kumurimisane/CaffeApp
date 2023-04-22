@@ -30,7 +30,7 @@ class ReservationForm(forms.Form):
 class AddProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ['name', 'description', 'price', 'image']
+        fields = ['name', 'description', 'price', 'available', 'veggie_option', 'image']
         
 class EditUserForm(UserChangeForm):
     password= forms.CharField(

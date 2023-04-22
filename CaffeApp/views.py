@@ -59,23 +59,22 @@ class ProductDetail(LoginRequiredMixin, DetailView):
 class ProductCreate(LoginRequiredMixin, CreateView):
     model= Product
     template_name= "add_products.html"
-    fields= ['name','price','description','image']
+    fields = ['name', 'description', 'price', 'available', 'veggie_option', 'image']
     success_url= '/CaffeApp/index_page/'
 
 @method_decorator(staff_member_required(login_url='/CaffeApp/index_page/'), name='dispatch')
 class ProductUpdate(LoginRequiredMixin, UpdateView):
     model= Product
     template_name= "update_products.html"   
-    fields= ['description','price']
-    success_url= '/CaffeApp/index_page/'
+    fields= ['description','price', 'available', 'veggie_option']
+    success_url= '/CaffeApp/lists-product/'
     context_object_name= 'product'
     
 @method_decorator(staff_member_required(login_url='/CaffeApp/index_page/'), name='dispatch')
 class ProductDelete(LoginRequiredMixin, DeleteView):
     model= Product
     template_name= "delete_products.html"   
-    fields= ['description','price']
-    success_url= '/CaffeApp/index_page/'
+    success_url= '/CaffeApp/lists-product/'
     context_object_name= 'product'
     
 def login_form(request):

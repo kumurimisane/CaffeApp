@@ -12,8 +12,14 @@ class Product(models.Model):
     name = models.CharField(max_length=40, unique=True)
     description = models.TextField(max_length=240)
     price = models.IntegerField()
+    available_choices = ( 
+        ('avaible', 'Disponoble'),
+        ('not avaible', 'No disponible')
+    )
+    available = models.CharField(max_length=15, choices= available_choices )
+    veggie_option = models.CharField(max_length=15, choices= available_choices )
     image = models.ImageField(upload_to='media/', null=True, blank=True, default='image')
-
+    
     def _str_(self):
         return f'{self.name} --> {self.price}'
     
