@@ -1,13 +1,5 @@
 from django.db import models
 
-class Client(models.Model):
-    name = models.CharField(max_length=40)
-    password = models.CharField(max_length=15)
-    email = models.EmailField()
-    
-    def __str__(self):
-        return f'{self.name}'
-    
 class Product(models.Model):
     name = models.CharField(max_length=40, unique=True)
     description = models.TextField(max_length=240)
@@ -18,13 +10,13 @@ class Product(models.Model):
     )
     available = models.CharField(max_length=15, choices= available_choices )
     veggie_option = models.CharField(max_length=15, choices= available_choices )
-    image = models.ImageField(upload_to='media/', null=True, blank=True, default='image')
+    image = models.ImageField(upload_to='product/', null=True, blank=True, default='image')
     
     def _str_(self):
         return f'{self.name} --> {self.price}'
     
 class Reservation(models.Model):
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=50)
     email = models.EmailField()
     phone = models.CharField(max_length=20)
     number_guests = models.IntegerField()
@@ -47,13 +39,22 @@ class Reservation(models.Model):
     def __str__(self):
         return self.name
         
-"""class Staff(models.Model):
-    name:
-    last_name:
-    job:
-    workshift:
-    birthday:
+class Staff(models.Model):
+    name = models.CharField(max_length=40)
+    last_name = models.CharField(max_length=40)
+    job = models.CharField(max_length=40)
+    workshift_choices = ( 
+        ('morning', 'Mañana'),
+        ('evening', 'Tarde'),
+    )
+    workshift = models.CharField(max_length=15, choices= workshift_choices )
+    age = models.IntegerField()
+    image = models.ImageField(upload_to='staff/', null=True, blank=True, default='image')
     
+    def __str__(self):
+        return f" {self.name} -- {self.last_name}"
+    
+"""
 class Promo_menu(models.Model):
     name:
     price:

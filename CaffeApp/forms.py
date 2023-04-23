@@ -50,3 +50,7 @@ class EditUserForm(UserChangeForm):
         if password2 != self.cleaned_data["password1"]:
             raise forms.ValidationError("las contraseñas no coinciden!")
         return password2
+    
+class StaffForm(forms.Form):
+        model = Staff
+        fields= ('name','last_name', 'job', 'workshift', 'age', 'image')

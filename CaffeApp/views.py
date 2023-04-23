@@ -12,6 +12,12 @@ from django.urls import reverse
 from django.contrib.admin.views.decorators import staff_member_required
 from django.utils.decorators import method_decorator
 
+
+def contact_us(request):
+    return render(request, "contact_us.html")
+
+#Inicio del sertor de Producto
+
 @login_required
 def index(request):
     if request.method == 'POST':
@@ -31,41 +37,38 @@ def index(request):
                                       message=data_formulario['message']
                                       )
             inscripcion.save()
-            return render (request, "reservation_success.html")
+            return render (request, "product/reservation_success.html")
         
     else:
         miFormulario = ReservationForm()
-        return render(request, 'index_page.html',{'miFormulario': miFormulario})
+        return render(request, 'product/index_page.html',{'miFormulario': miFormulario})
     
 def success(request):
-    return render(request, "reservation_success.html")
-
-def contact_us(request):
-    return render(request, "contact_us.html")
+    return render(request, "product/reservation_success.html")
 
 @method_decorator(staff_member_required(login_url='/CaffeApp/index_page/'), name='dispatch')
 class ProductList(LoginRequiredMixin, ListView):
     model= Product
-    template_name= "show_products.html"
+    template_name= "product/show_products.html"
     context_object_name= "products"
     
 @method_decorator(staff_member_required(login_url='/CaffeApp/index_page/'), name='dispatch')
 class ProductDetail(LoginRequiredMixin, DetailView):
     model= Product
-    template_name= "detail_product.html"
+    template_name= "product/detail_product.html"
     context_object_name= "product"
     
 @method_decorator(staff_member_required(login_url='/CaffeApp/index_page/'), name='dispatch')
 class ProductCreate(LoginRequiredMixin, CreateView):
     model= Product
-    template_name= "add_products.html"
+    template_name= "product/add_products.html"
     fields = ['name', 'description', 'price', 'available', 'veggie_option', 'image']
-    success_url= '/CaffeApp/index_page/'
+    success_url= '/CaffeApp/lists-product/'
 
 @method_decorator(staff_member_required(login_url='/CaffeApp/index_page/'), name='dispatch')
 class ProductUpdate(LoginRequiredMixin, UpdateView):
     model= Product
-    template_name= "update_products.html"   
+    template_name= "product/update_products.html"   
     fields= ['description','price', 'available', 'veggie_option']
     success_url= '/CaffeApp/lists-product/'
     context_object_name= 'product'
@@ -73,9 +76,13 @@ class ProductUpdate(LoginRequiredMixin, UpdateView):
 @method_decorator(staff_member_required(login_url='/CaffeApp/index_page/'), name='dispatch')
 class ProductDelete(LoginRequiredMixin, DeleteView):
     model= Product
-    template_name= "delete_products.html"   
+    template_name= "product/delete_products.html"   
     success_url= '/CaffeApp/lists-product/'
     context_object_name= 'product'
+
+#Final del sertor de Producto
+
+#Inicio del sector de Usuarios
     
 def login_form(request):
     if request.method == 'POST':  
@@ -96,7 +103,7 @@ def login_form(request):
             return render (request, "index_page.html", {"mensaje": 'Formulario invalido'})
     else:
         miFormulario = AuthenticationForm()
-        return render(request, 'login.html', {'miFormulario': miFormulario})
+        return render(request, 'users/login.html', {'miFormulario': miFormulario})
     
 def register_form(request):
     if request.method == 'POST':  
@@ -112,7 +119,7 @@ def register_form(request):
             return render (request, "index_page.html", {"mensaje": 'Formulario invalido'})
     else:
         user_creation_form = UserCreationForm()
-        return render(request, 'register.html',{'user_creation_form': user_creation_form })
+        return render(request, 'users/register.html',{'user_creation_form': user_creation_form })
 
 @login_required
 def edit_user(request):
@@ -133,5 +140,46 @@ def edit_user(request):
             return render (request, "index_page.html", {"mensaje": 'Formulario invalido'})
     else:
         miFormulario = EditUserForm(instance= request.user)
-        return render(request, 'edit_user.html', {'miFormulario': miFormulario})
+        return render(request, 'users/edit_user.html', {'miFormulario': miFormulario})
     
+#Final del sector de Usuarios    
+
+#Inicio del sector de Staff
+
+
+
+#Final del sector de Staff    
+
+@method_decorator(staff_member_required(login_url='/CaffeApp/index_page/'), name='dispatch')
+class StaffList(LoginRequiredMixin, ListView):
+    model= Staff
+    template_name= "staff/show_staff.html"
+    context_object_name= "Staff"
+    
+@method_decorator(staff_member_required(login_url='/CaffeApp/index_page/'), name='dispatch')
+class StaffDetail(LoginRequiredMixin, DetailView):
+    model= Staff
+    template_name= "staff/detail_staff.html"
+    context_object_name= "Staff"
+    
+@method_decorator(staff_member_required(login_url='/CaffeApp/index_page/'), name='dispatch')
+class StaffCreate(LoginRequiredMixin, CreateView):
+    model= Staff
+    template_name= "staff/add_staff.html"
+    fields = ('name','last_name', 'job', 'workshift', 'age', 'image')
+    success_url= '/CaffeApp/lists-staff/'
+
+@method_decorator(staff_member_required(login_url='/CaffeApp/index_page/'), name='dispatch')
+class StaffUpdate(LoginRequiredMixin, UpdateView):
+    model= Staff
+    template_name= "staff/update_staff.html"   
+    fields= ['job', 'workshift']
+    success_url= '/CaffeApp/lists-staff/'
+    context_object_name= 'Staff'
+    
+@method_decorator(staff_member_required(login_url='/CaffeApp/index_page/'), name='dispatch')
+class StaffDelete(LoginRequiredMixin, DeleteView):
+    model= Staff
+    template_name= "staff/delete_staff.html"   
+    success_url= '/CaffeApp/lists-staff/'
+    context_object_name= 'Staff'
