@@ -5,3 +5,4 @@ from .models import *
 admin.site.register(Product)
 admin.site.register(Reservation)
 admin.site.register(Staff)
+admin.site.register(Promo_menu)

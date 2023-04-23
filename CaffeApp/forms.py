@@ -52,5 +52,11 @@ class EditUserForm(UserChangeForm):
         return password2
     
 class StaffForm(forms.Form):
+    class Meta:
         model = Staff
         fields= ('name','last_name', 'job', 'workshift', 'age', 'image')
+        
+class AddPromoForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ['name', 'description', 'price', 'available', 'veggie_option', 'image']

@@ -54,12 +54,18 @@ class Staff(models.Model):
     def __str__(self):
         return f" {self.name} -- {self.last_name}"
     
-"""
 class Promo_menu(models.Model):
-    name:
-    price:
-    description:
-    special_event:
-    veggie_option:
+    name = models.CharField(max_length=40, unique=True)
+    description = models.TextField(max_length=240)
+    price = models.IntegerField()
+    choices = ( 
+        ('avaible', 'Disponoble'),
+        ('not avaible', 'No disponible')
+    )
+    available = models.CharField(max_length=15, choices= choices )
+    veggie_option = models.CharField(max_length=15, choices= choices )
+    image = models.ImageField(upload_to='promo/', null=True, blank=True, default='image')
+    
+    def _str_(self):
+        return f'{self.name} --> {self.price}'
 
-"""

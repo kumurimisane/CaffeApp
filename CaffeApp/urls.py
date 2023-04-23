@@ -25,6 +25,12 @@ urlpatterns = [
     path('create-staff/', StaffCreate.as_view(), name= 'create-staff'),
     path('update-staff/<pk>/', StaffUpdate.as_view(), name= 'update-staff'),
     path('delete-staff/<pk>/', StaffDelete.as_view(), name= 'delete-staff'),
+    # Url relacionados a Promo
+    path('lists-promo/', PromoList.as_view(), name= 'lists-promo'),
+    path('detail-promo/<pk>/', PromoDetail.as_view(), name= 'detail-promo'),
+    path('create-promo/', PromoCreate.as_view(), name= 'create-promo'),
+    path('update-promo/<pk>/', PromoUpdate.as_view(), name= 'update-promo'),
+    path('delete-promo/<pk>/', PromoDelete.as_view(), name= 'delete-promo'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

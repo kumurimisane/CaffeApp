@@ -146,10 +146,6 @@ def edit_user(request):
 
 #Inicio del sector de Staff
 
-
-
-#Final del sector de Staff    
-
 @method_decorator(staff_member_required(login_url='/CaffeApp/index_page/'), name='dispatch')
 class StaffList(LoginRequiredMixin, ListView):
     model= Staff
@@ -183,3 +179,43 @@ class StaffDelete(LoginRequiredMixin, DeleteView):
     template_name= "staff/delete_staff.html"   
     success_url= '/CaffeApp/lists-staff/'
     context_object_name= 'Staff'
+
+#Final del sector de Staff   
+
+#Inicio del sector de Promo
+
+@method_decorator(staff_member_required(login_url='/CaffeApp/index_page/'), name='dispatch')
+class PromoList(LoginRequiredMixin, ListView):
+    model= Promo_menu
+    template_name= "promo/show_promo.html"
+    context_object_name= "promo"
+    
+@method_decorator(staff_member_required(login_url='/CaffeApp/index_page/'), name='dispatch')
+class PromoDetail(LoginRequiredMixin, DetailView):
+    model= Promo_menu
+    template_name= "promo/detail_promo.html"
+    context_object_name= "promo"
+    
+@method_decorator(staff_member_required(login_url='/CaffeApp/index_page/'), name='dispatch')
+class PromoCreate(LoginRequiredMixin, CreateView):
+    model= Promo_menu
+    template_name= "promo/add_promo.html"
+    fields = ['name', 'description', 'price', 'available', 'veggie_option', 'image']
+    success_url= '/CaffeApp/lists-promo/'
+
+@method_decorator(staff_member_required(login_url='/CaffeApp/index_page/'), name='dispatch')
+class PromoUpdate(LoginRequiredMixin, UpdateView):
+    model= Promo_menu
+    template_name= "promo/update_promo.html"   
+    fields= ['description','price', 'available', 'veggie_option']
+    success_url= '/CaffeApp/lists-promo/'
+    context_object_name= 'promo'
+    
+@method_decorator(staff_member_required(login_url='/CaffeApp/index_page/'), name='dispatch')
+class PromoDelete(LoginRequiredMixin, DeleteView):
+    model= Promo_menu
+    template_name= "promo/delete_promo.html"   
+    success_url= '/CaffeApp/lists-promo/'
+    context_object_name= 'promo'
+
+#Final del sector de Promo  
