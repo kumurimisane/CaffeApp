@@ -16,6 +16,9 @@ from django.utils.decorators import method_decorator
 def contact_us(request):
     return render(request, "contact_us.html")
 
+def carousel(request):
+    return render(request, "carousel.html")
+
 #Inicio del sertor de Producto
 
 @login_required
@@ -98,9 +101,9 @@ def login_form(request):
                 login(request, user_data)
                 return redirect(reverse('index'))            
             else:
-                return render (request, "index_page.html", {"mensaje": 'Error en los datos'})
+                return render (request, "product/index_page.html", {"mensaje": 'Error en los datos'})
         else:
-            return render (request, "index_page.html", {"mensaje": 'Formulario invalido'})
+            return render (request, "product/index_page.html", {"mensaje": 'Formulario invalido'})
     else:
         miFormulario = AuthenticationForm()
         return render(request, 'users/login.html', {'miFormulario': miFormulario})
@@ -113,10 +116,10 @@ def register_form(request):
             data = user_creation_form.cleaned_data
             username = data["username"]
             user_creation_form.save()
-            return render(request, 'index_page.html', {'mensaje': f'Usuario {username} creado'}) 
+            return redirect(reverse('login') , {'mensaje': f'Usuario {username} creado'}) 
 
         else:
-            return render (request, "index_page.html", {"mensaje": 'Formulario invalido'})
+            return render (request, "users/login.html", {"mensaje": 'Formulario invalido'})
     else:
         user_creation_form = UserCreationForm()
         return render(request, 'users/register.html',{'user_creation_form': user_creation_form })
@@ -135,9 +138,9 @@ def edit_user(request):
             acount.last_name = data['last_name']
             acount.set_password(data["password1"])
             acount.save()
-            return render (request, "index_page.html", {"mensaje": 'Datos actualizados!'})           
+            return render (request, "product/index_page.html", {"mensaje": 'Datos actualizados!'})           
         else:
-            return render (request, "index_page.html", {"mensaje": 'Formulario invalido'})
+            return render (request, "product/index_page.html", {"mensaje": 'Formulario invalido'})
     else:
         miFormulario = EditUserForm(instance= request.user)
         return render(request, 'users/edit_user.html', {'miFormulario': miFormulario})
